@@ -1,6 +1,7 @@
 class Bowling
     def initialize 
         @score = []
+        @total = 0
     end
     
     def add_score(pins)
@@ -12,7 +13,6 @@ class Bowling
     end
     
     def calc_score
-        @total = 0
         @frame = 0
         while @score.size > @frame do
             pin1 = @score[@frame]
