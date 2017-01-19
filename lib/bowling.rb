@@ -21,30 +21,24 @@ class Bowling
             pin2 = @scores[@index+1] if @index+1 <= @scores.size
             pin3 = @scores[@index+2] if @index+2 <= @scores.size 
             #ストライクの処理
-            if pin1 == 10 && pin2!= nil && pin3 != nil  then
-                @total += pin1 + pin2 + pin3
-                @frame_scores << @total
-                @frame += 1
+            if  strike?(pin1)  then
+                @total += pin1 + pin2.to_i + pin3.to_i
                 @index += 1
-            elsif  pin1 == 10 && pin2 != nil then
-                @total += pin1 + pin2 
-                @frame_scores << @total
-                @frame += 1
-                @index += 1 
-            elsif pin1 == 10 then
-                @total += pin1
-                @frame_scores << @total
-                @frame += 1
-                @index += 1      
+                #p @total
             #ここまで    
             else
-                @total += pin1 + pin2
-                @total += pin3 if spare?(pin1,pin2) && pin3 != nil
-                @frame_scores << @total
-                @frame += 1
+                @total += pin1 + pin2.to_i
+                @total += pin3.to_i if spare?(pin1,pin2) 
                 @index += 2
             end
+            @frame_scores << @total
+            @frame += 1
+            #p "frame: #{@frame-1}    total: #{@total}"
+            pin2 = 0
+            pin3 = 0
         end
+        #p @frame
+        #p @frame_scores
     end
     
     def frame_score(index)
@@ -52,6 +46,10 @@ class Bowling
     end
     
     def spare?(pin1,pin2)
-        pin1 + pin2 == 10
+        pin1 + pin2.to_i == 10
+    end
+    
+    def strike?(pin1)
+        pin1 == 10
     end
 end
